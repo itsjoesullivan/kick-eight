@@ -1,7 +1,9 @@
+var Kicky = require('./index');
+
 var context = new AudioContext();
-var kicky = require('./index');
+var kick = Kicky(context);
 document.getElementById('kick').addEventListener('click', function(e) {
-  kickNode = kicky(context);
+  kickNode = kick();
   kickNode.connect(context.destination);
   kickNode.start(context.currentTime + 0.01);
 });
