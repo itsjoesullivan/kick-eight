@@ -27,10 +27,10 @@ module.exports = function(context) {
 };
 
 },{}],2:[function(require,module,exports){
-var Kicky = require('./index');
+var Kick8 = require('./index');
 
 var context = new AudioContext();
-var kick = Kicky(context);
+var kick = Kick8(context);
 document.getElementById('kick').addEventListener('click', function(e) {
   kickNode = kick();
   kickNode.connect(context.destination);
