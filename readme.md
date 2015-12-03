@@ -1,15 +1,15 @@
 ##Usage
 
-`npm install --save kicky`
+`npm install --save kick-eight`
 
 ```javascript
-var Kicky = require('kicky');
+var Kick8 = require('kick-eight');
 
 // Initialize AudioContext
 var context = new AudioContext();
 
 // Initialize instrument
-var kick = Kicky(context);
+var kick = Kick8(context);
 
 // Create clap audio node (one time use only)
 var kickNode = kick();
