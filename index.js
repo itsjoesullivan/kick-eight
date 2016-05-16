@@ -7,6 +7,8 @@ module.exports = function(context, parameters) {
   parameters.decay = typeof parameters.decay === 'number' ? parameters.decay : 64;
   parameters.level = typeof parameters.level === 'number' ? parameters.level : 100;
 
+  var noiseBuffer = NoiseBuffer(1);
+
   return function() {
     var osc = context.createOscillator();
     osc.frequency.value = 54;
@@ -20,7 +22,8 @@ module.exports = function(context, parameters) {
     duration = (max - min) * (parameters.decay / 127) + min;
 
     var noise = context.createBufferSource();
-    noise.buffer = NoiseBuffer(duration);
+    noise.buffer = noiseBuffer;
+    noise.loop = true;
     var noiseGain = context.createGain();
     var noiseFilter = context.createBiquadFilter();
     noiseFilter.type = "bandpass";
