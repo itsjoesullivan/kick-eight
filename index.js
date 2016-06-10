@@ -67,6 +67,7 @@ module.exports = function(context, parameters) {
       osc.stop(when + duration);
       osc.onended = function() {
         gain.disconnect();
+        if (gain.onended) gain.onended();
       }
 
       oscGain.gain.setValueAtTime(0.0001, when);
@@ -81,7 +82,8 @@ module.exports = function(context, parameters) {
 
       choke.gain.setValueAtTime(1, when);
       choke.gain.linearRampToValueAtTime(0, when + 0.0001);
-      choke.gain.cancelScheduledValues(when + 0.001);
+      choke.gain.cancelScheduledValues(when + 0.0001);
+      osc.stop(when + 0.0001); // stops the oscillator to fire the onended event
     };
 
     return gain;
