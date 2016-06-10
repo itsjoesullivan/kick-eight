@@ -81,6 +81,7 @@ module.exports = function(context, parameters) {
 
       choke.gain.setValueAtTime(1, when);
       choke.gain.linearRampToValueAtTime(0, when + 0.0001);
+      choke.gain.cancelScheduledValues(when + 0.001);
     };
 
     return gain;
