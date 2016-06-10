@@ -1,32 +1,29 @@
 var NoiseBuffer = require('noise-buffer');
 var noiseBuffer = NoiseBuffer(1);
 
-module.exports = function(context, parameters) {
+function param(v) { return typeof v === 'number' ? v : null }
 
-  parameters = parameters || {};
-  parameters.tone = typeof parameters.tone === 'number' ? parameters.tone : 64;
-  parameters.decay = typeof parameters.decay === 'number' ? parameters.decay : 64;
-  parameters.level = typeof parameters.level === 'number' ? parameters.level : 100;
-
+module.exports = function(context, defaults) {
+  defaults = defaults || {};
   var playingNodes = [];
 
-  return function() {
+  return function(params) {
+    params = params || {};
+
+    var gain = context.createGain();
+    gain.decay = param(params.decay) || param(defaults.decay) || 64
+    gain.tone = param(params.tone) || param(defaults.tone) || 64
 
     var osc = context.createOscillator();
     osc.frequency.value = 54;
-    var gain = context.createGain();
     var oscGain = context.createGain();
     osc.connect(oscGain);
-
-    gain.decay = parameters.decay;
-    gain.tone = parameters.tone;
 
     var choke = context.createGain();
     choke.gain.value = 0;
 
     oscGain.connect(choke);
     choke.connect(gain);
-
 
     gain.start = function(when) {
       if (typeof when !== 'number') {
